@@ -8,3 +8,7 @@ sudo vim /etc/proxychains.conf
 
 nmap -Pn -T4 10.50.27.84 -p80 --script http-enum.nse
 nmap -Pn -T4 10.50.27.84 -p445,139 --script smb-os-discovery.nse
+uname -a #gives kernel info
+nist,mitre,cve.org,cve.mitre.org-good sites to look up CVE's
+exploit-db.com   #exploit database
+ibm

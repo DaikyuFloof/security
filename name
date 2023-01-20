@@ -1,3 +1,4 @@
 right click view page source
 
 scrape.py   :set nu   #gets line numbers on the script 
+for i in {1..254}; do (ping -c 1 192.168.1.$i 2>/dev/null | grep "BYTES FROM"); done

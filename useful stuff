@@ -12,3 +12,10 @@ uname -a #gives kernel info
 nist,mitre,cve.org,cve.mitre.org-good sites to look up CVE's
 exploit-db.com   #exploit database
 ibm
+
+
+ssh 10.50.28.79 -L 11101:192.168.28.111:80 -NT
+ssh 10.50.28.79 -L 11102:192.168.28.111:8080 -NT
+firefox
+http://0.0.0.0:11101
+http://0.0.0.0:11102

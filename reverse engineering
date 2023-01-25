@@ -23,3 +23,19 @@ mem2:
    pop r8   #r8 is a variable and pop saves the value to top of the stack
    cmp rax,r8
    jz mem1
+
+
+main:
+    mov rcx,25
+    mov rbx,62
+    jmp mem1
+mem1:
+    sub rbx,40    #makes rbx 22 now becuase 62-40
+    mov rsi,rbx   #makes rsi=22 which is the value of rbx put into rsi
+    cmp rcx,rsi    #22-25=-3 so less than 0
+    jle mem2    #less than
+mem2:
+    mov rax,0
+    ret
+    
+    

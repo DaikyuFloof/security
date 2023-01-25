@@ -39,3 +39,9 @@ mem2:
     ret
     
     
+ghidra  param_1 means user input
+
+
+int('{:032b}'.format(b)[-32:],2)
+
+scp -P 11101 -pr prj/ comrade@localhost:/var/www/html/consulting/public_html/longTermStorage/entry.exe .

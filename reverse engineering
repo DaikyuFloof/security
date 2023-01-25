@@ -1,0 +1,25 @@
+ip pointer
+as pointer
+bp base pointer
+
+Heap memory that can be allocated and deallocated
+stack: a contiguous section of memory used for passing arguements
+general register: a multipurpose register that can be used by either programmer or user store data or a memory location address
+control register: a processor register that changes or controls the behavior of a CPU
+flags register: contains the current state of the processor
+
+cmp-compare (0 means same & !0 means different)
+jmp-jump
+
+
+main:           #has to have "main" function by that name
+   mov rax,16   #makes rax = 16
+   push rax     #push that thing onto stack
+   jmp mem2
+mem1:
+   mov rax,0
+   ret
+mem2:
+   pop r8   #r8 is a variable and pop saves the value to top of the stack
+   cmp rax,r8
+   jz mem1

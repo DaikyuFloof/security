@@ -1,0 +1,4 @@
+once you're done patching export as PE(portable executable
+
+make sure the exe always registers as success
+changed demo1.exe -> JNZ to JG(jump if not zero -> jump if greater than)

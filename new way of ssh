@@ -35,3 +35,20 @@ vim ~/.ssh/config
 ssh jump  (or)   ssh -S ~/.ssh/cm/jump a
 
 ssh -M -S ~/.ssh/cm/comrade -p 1111 comrade@0.0.0.0
+
+
+
+
+find / -iname "PasswoD.tXt" 2>/dev/null  #linux
+
+
+dir /ah  #windows
+find /i "myfile"
+findstr /i "this" text.txt
+netstat -ano
+tasklist /svc | findstr "1264"
+
+
+windows logon id 4624(filter for it on event viewer for the logs)
+
+extranet->intranet->internal

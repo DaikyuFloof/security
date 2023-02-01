@@ -15,7 +15,7 @@ ssh -S ~/.ssh/cm/jump a
 ssh -O forward -L 1111:192.168.28.111:2222 -S ~/.ssh/cm/jump placeholder   #opens up a connection thorugh the jump connection
 ssh -O forward -L 2222:192.168.28.105:2222 -S ~/.ssh/cm/jump placeholder
 
-ssh -p1111 comrade@0.0.0.0
+ssh -M -S ~/.ssh/cm/comrade -p 1111 comrade@0.0.0.0
 
 ssh -O cancel -L 2222:192.168.28.105:2222 -S ~/.ssh/cm/jump placeholder   #cancels the connection
 
@@ -34,3 +34,4 @@ vim ~/.ssh/config
   
 ssh jump  (or)   ssh -S ~/.ssh/cm/jump a
 
+ssh -M -S ~/.ssh/cm/comrade -p 1111 comrade@0.0.0.0

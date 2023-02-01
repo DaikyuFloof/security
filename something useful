@@ -1,0 +1,36 @@
+ssh student@10.50.28.79 -L 1111:192.168.28.111:2222   #old way of doing things
+ssh student@localhost -p 1111 #part 2 of old way of doing things
+
+
+mkdir ~/.ssh/cm && cd ~/.ssh/cm  #makes a place to save the things
+
+ssh -M -S ~/.ssh/cm/jump student@10.50.28.79
+
+ssh -S ~/.ssh/cm/jump placeholderlol
+
+ssh -o "ControlPersist=10m" -M -S ~/.ssh/cm/jump student@10.50.28.79  #make sure you don't go over an hour for the 10min part(10m)
+
+ssh -S ~/.ssh/cm/jump a
+
+ssh -O forward -L 1111:192.168.28.111:2222 -S ~/.ssh/cm/jump placeholder   #opens up a connection thorugh the jump connection
+ssh -O forward -L 2222:192.168.28.105:2222 -S ~/.ssh/cm/jump placeholder
+
+ssh -p1111 comrade@0.0.0.0
+
+ssh -O cancel -L 2222:192.168.28.105:2222 -S ~/.ssh/cm/jump placeholder   #cancels the connection
+
+ssh -O forward -L2222:192.168.28.120:4242 -S ~/.ssh/cm/jump placeholder
+
+
+
+
+vim ~/.ssh/config
+1 Host jump
+  2         HostName 10.50.28.79
+  3         User student
+  4         controlpath ~/.ssh/cm/jump
+  5         controlmaster auto
+  6         controlpersist 60m
+  
+ssh jump  (or)   ssh -S ~/.ssh/cm/jump a
+

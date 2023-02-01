@@ -56,3 +56,12 @@ tasklist /svc | findstr "1264"
 windows logon id 4624(filter for it on event viewer for the logs)
 
 extranet->intranet->internal
+
+cat /etc/hosts #to see what "connections" this box has
+
+
+chmod +x /bin/nc.openbsd   # makes nc executable
+
+
+tcpdump host 192.168.28.135   #filters traffic from only this host
+nc -lvp 12342   #go ahead of the port its on and listen on it to get the answer

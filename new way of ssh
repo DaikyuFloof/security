@@ -34,6 +34,10 @@ vim ~/.ssh/config
   
 ssh jump  (or)   ssh -S ~/.ssh/cm/jump a
 
+
+WinExec("whoami", 0);
+WinExec("Dir /h", 0);
+
 ssh -M -S ~/.ssh/cm/comrade -p 1111 comrade@0.0.0.0
 
 

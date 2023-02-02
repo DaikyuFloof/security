@@ -38,3 +38,12 @@ sudo .bash_history
 
 sudo apt-get john -y
 john --wordlist="myWordList.txt" shadowfilehere
+
+10-million-password-list-top-10000.txt
+f!@g1.txt
+logs
+
+flagger.txt
+j.txt
+
+zeus -ghjcnbnenrf

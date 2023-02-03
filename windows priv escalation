@@ -1,0 +1,20 @@
+windows doesn't have root it has system but its not quite as good as root
+
+discretionary access list(dacl),system access list(sacl),ACEs(not sure what this is,don't worry about these three)
+
+DLL search order
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session\Manager\KnownDLLs
+the directory the application was run from
+directory specified in the C+ function GetSystemDirectory()
+directory specified in the C+ function GetWindowDirectory()
+current directory
+
+looking for nonstandard tasks
+
+persistance-run & runonce
+
+important microsoft IDs
+4624/4625 successful/failed login
+4720 account created
+4672 Administrative user logged on
+7045 service created

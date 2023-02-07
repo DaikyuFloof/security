@@ -182,4 +182,4 @@ sudo ./func <<< $(python2 linbuff.py)
 scp it into tmp on the enemy machine
 get their eip and put it into it(info proc map)
 
-sudo ./func <<< $(python2 /tmp/linbuff.py)
+sudo ./func <<< $(python2 /tmp/linbuff.py)   #if you have root access then you don't need sudo in it

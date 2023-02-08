@@ -129,7 +129,7 @@ eip = "B" *4
 
 print(offset + eip)
 #SAVE IT,confirms then you can get rid of "B"s after you run it
-env -gdb func
+env - gdb func
 show env
 unset <whatevers in there> 
 show env   #that bitch better be empty

